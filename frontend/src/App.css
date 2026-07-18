@@ -1,0 +1,45 @@
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Drag-and-drop zone highlight, driven by a `.dropzone-active` class
+   toggled from FileUpload state rather than :hover, since the highlight
+   must persist for the whole drag gesture (including over child elements). */
+.dropzone {
+  transition: border-color 150ms ease-out, background-color 150ms ease-out, transform 150ms ease-out;
+}
+
+.dropzone-active {
+  border-color: #3b82f6;
+  background-color: rgba(59, 130, 246, 0.08);
+  transform: scale(1.01);
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.45);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+}
+
+.pulse-ring {
+  animation: pulse-ring 1.5s ease-out infinite;
+}
+
+/* react-syntax-highlighter renders its own <pre>; strip the default
+   margins so it sits flush inside our rounded card. */
+.code-panel pre {
+  margin: 0 !important;
+  border-radius: 0 0 0.75rem 0.75rem !important;
+}
