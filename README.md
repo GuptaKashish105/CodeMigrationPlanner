@@ -6,6 +6,12 @@ Analyzes multi-file codebases, generates prioritized migration roadmaps, and con
 
 ---
 
+## 🚀 Live Demo
+
+**Frontend:** https://196afd81-9ede-4017-a932-19eeab354bd4-00-2sw7v9t8c0mb7.worf.replit.dev/
+
+---
+
 ## The Problem
 
 Legacy codebases (jQuery, Python 2, Angular 1.x) need to migrate to modern frameworks (React, Python 3, Vue). But migration planning is painful:
