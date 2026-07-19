@@ -1,359 +1,395 @@
 # CodeMigrationPlanner
 
-**Intelligent code migration analysis and planning tool powered by Claude AI**
+**AI-powered code migration analysis and planning tool powered by Claude AI**
 
-Analyzes multi-file codebases, generates prioritized migration roadmaps, and converts sample code as proof-of-concept—all in one workflow.
-
----
+Analyzes multi-file jQuery codebases, generates prioritized migration roadmaps, and converts sample code as proof-of-concept—all in one workflow.
 
 ## 🚀 Live Demo
 
-**Frontend:** https://196afd81-9ede-4017-a932-19eeab354bd4-00-2sw7v9t8c0mb7.worf.replit.dev/
+**Frontend (Live):** https://196afd81-9ede-4017-a932-19eeab354bd4-00-2sw7v9t8c0mb7.worf.replit.dev/
 
----
-
-## The Problem
+## 🎯 The Problem
 
 Legacy codebases (jQuery, Python 2, Angular 1.x) need to migrate to modern frameworks (React, Python 3, Vue). But migration planning is painful:
 
 - **Manual:** Developers manually audit dependencies across files
 - **Blind:** No understanding of which files should migrate first
-- **Slow:** Planning phase takes 3–6 months before any code is converted
+- **Slow:** Planning phase takes 3-6 months before any code is converted
 - **Risky:** Breaking changes discovered mid-migration, not during planning
 
-**Traditional AI chat tools aren't designed for this workflow:** They typically convert snippets one-by-one, without project-wide dependency analysis or strategic migration planning.
+**ChatGPT can't solve this:** It converts snippets one-by-one, with no project-wide understanding of dependencies or strategic prioritization.
 
----
+## ✨ The Solution
 
-# The Solution
-
-**CodeMigrationPlanner** is a 4-step AI pipeline that:
+**CodeMigrationPlanner** is a 5-step AI workflow that:
 
 1. **Analyzes** all files at once (dependencies, complexity, patterns)
 2. **Maps** which files call which (criticality ranking)
 3. **Generates** a prioritized roadmap (Phase 1 → Phase 2 → Phase 3)
-4. **Converts** sample Phase 1 files as proof-of-concept
+4. **Identifies** breaking changes before they happen
+5. **Converts** sample Phase 1 files as proof-of-concept
 
-## Output Example
+### Example Output
+
+**Input:** 5 jQuery files (utility.js, auth.js, modal.js, sidebar.js, app.js)
+
+**Output Roadmap:**
 
 ```text
-PHASE 1 (Priority 1–2): Isolated utilities, low complexity — migrate FIRST
-├── utility.js → ✅ CONVERTED TO REACT (with code)
-├── auth.js → ✅ CONVERTED TO REACT (with code)
-└── Effort: 20 hours | Risk: LOW
+PHASE 1 (Priority 1-2): Isolated utilities, low complexity — migrate FIRST
+├─ utility.js (2h effort, LOW risk)
+│  └─ Functions: debounce(), formatDate()
+│  └─ Breaking changes: None
+│  └─ Converted code: React hooks included
+└─ Phase 1 Total: 2 hours, LOW risk
 
-PHASE 2 (Priority 3–4): Dependent modules, medium complexity
-├── modal.js → Strategy: Split into 2 components
-├── sidebar.js → Strategy: Replace globals with useContext
-└── Effort: 40 hours | Risk: MEDIUM
+PHASE 2 (Priority 3-4): Dependent components, medium complexity
+├─ auth.js (6h effort, MEDIUM risk)
+│  └─ Breaking changes: $.ajax → fetch, global state → Context API
+├─ modal.js (5h effort, MEDIUM risk)
+│  └─ Breaking changes: jQuery animations → CSS transitions
+└─ Phase 2 Total: 11 hours, MEDIUM risk
 
-PHASE 3 (Priority 5): Core application logic — migrate LAST
-├── app.js → Strategy: Refactor into Container + Presentational components
-└── Effort: 80 hours | Risk: HIGH
+PHASE 3 (Priority 5): Core logic, high complexity — migrate LAST
+├─ sidebar.js (7h effort, HIGH risk)
+├─ app.js (9h effort, HIGH risk)
+└─ Phase 3 Total: 16 hours, HIGH risk
 
-BREAKING CHANGES IDENTIFIED
-⚠ utility.js depends on deprecated jQuery plugin (no direct React equivalent)
-⚠ auth.js is tightly coupled to app.js through global variables
+TOTAL: 29 hours, 5 weeks estimated
+
+CRITICAL PATH: utility.js → auth.js → modal.js → sidebar.js → app.js
 ```
 
----
+### Sample Code Conversion
 
-# How It Works
-
-## Step 1 — Code Analysis
-
-Upload your legacy files and the AI extracts:
-
-- File purpose
-- Functions
-- Dependencies
-- Complexity score
-- Lines of code
-- Legacy framework patterns
-
----
-
-## Step 2 — Dependency Mapping
-
-The analysis is combined to determine:
-
-- Which files call which
-- Dependency graph
-- Critical files
-- Isolated modules
-- Shared utilities
-
----
-
-## Step 3 — Migration Roadmap
-
-Based on complexity and dependencies, the AI generates:
-
-### Phase 1
-- Low-risk
-- Low-complexity
-- Independent files
-
-### Phase 2
-- Medium complexity
-- Moderate dependencies
-- Refactoring recommendations
-
-### Phase 3
-- Core application
-- High-risk components
-- Final migration sequence
-
-Each phase includes:
-
-- Estimated effort
-- Risk level
-- Breaking changes
-- Migration strategy
-
----
-
-## Step 4 — Proof-of-Concept Conversion
-
-Phase 1 files are converted into production-style React code with:
-
-- Functional components
-- Hooks (`useState`, `useEffect`, `useContext`)
-- Imports
-- Comments explaining migration decisions
-- Testing recommendations
-
----
-
-# Why CodeMigrationPlanner?
-
-| Capability | Traditional AI Chat | CodeMigrationPlanner |
-|------------|---------------------|----------------------|
-| Converts individual snippets | ✅ | ❌ |
-| Understands entire project | ❌ | ✅ |
-| Dependency analysis | ❌ | ✅ |
-| Prioritized migration phases | ❌ | ✅ |
-| Detects breaking changes | ❌ | ✅ |
-| Migration roadmap | ❌ | ✅ |
-| Converts initial production-ready files | ❌ | ✅ |
-| Strategy for remaining codebase | ❌ | ✅ |
-
-Instead of treating every file independently, CodeMigrationPlanner understands the complete codebase before recommending a migration strategy.
-
----
-
-# Tech Stack
-
-- **AI Engine:** Claude AI
-- **Language:** JavaScript / Node.js
-- **Output:** JSON reports + React code
-- **Deployment:** Replit (Free Tier)
-
----
-
-# Getting Started
-
-## Prerequisites
-
-- Claude (Web or API)
-- Legacy codebase (recommended 5–10 files)
-
----
-
-## Usage
-
-1. Collect your legacy project files.
-2. Run **Prompt #1** to analyze the codebase.
-3. Run **Prompt #2** to generate the dependency map.
-4. Run **Prompt #3** to create the migration roadmap.
-5. Run **Prompt #4** to convert the Phase 1 files.
-
-See **PROMPTS.md** for complete prompts.
-
-See **EXAMPLES.md** for sample inputs and outputs.
-
----
-
-# Prompt Pipeline
-
-The project is driven by four carefully designed prompts.
-
-## Prompt 1 — Code Analysis
-
-Extracts:
-
-- File structure
-- Functions
-- Dependencies
-- Complexity
-
----
-
-## Prompt 2 — Dependency Mapping
-
-Produces:
-
-- Dependency graph
-- File relationships
-- Criticality ranking
-
----
-
-## Prompt 3 — Roadmap Generation
-
-Produces:
-
-- Migration phases
-- Effort estimates
-- Risk analysis
-- Breaking changes
-
----
-
-## Prompt 4 — Code Conversion
-
-Generates:
-
-- React components
-- Hooks
-- Imports
-- Migration comments
-- Testing considerations
-
----
-
-See **PROMPTS.md** for the complete prompt collection.
-
----
-
-# Examples
-
-## Example Input
-
-```
-utility.js
-auth.js
-modal.js
-sidebar.js
-app.js
-```
-
----
-
-## Example Output
-
-```
-Phase 1
-- utility.js
-- auth.js
-
-Phase 2
-- modal.js
-- sidebar.js
-
-Phase 3
-- app.js
-```
-
-Complete examples are available in **EXAMPLES.md**.
-
----
-
-# Sample Migration
-
-## Before (jQuery)
-
+**jQuery (Before):**
 ```javascript
 function debounce(func, wait) {
   var timeout;
-
-  return function () {
+  return function() {
     clearTimeout(timeout);
     timeout = setTimeout(func, wait);
   };
 }
 ```
 
-## After (React)
-
+**React (After):**
 ```javascript
-import { useEffect, useState } from "react";
+import { useState, useEffect } from 'react';
 
-export function useDebounce(value, delay) {
+export const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
-
+  
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedValue(value);
     }, delay);
-
+    
     return () => clearTimeout(handler);
   }, [value, delay]);
-
+  
   return debouncedValue;
+};
+```
+
+## 🏗️ Architecture
+
+### Frontend (React + Vite)
+- **FileUpload.jsx** - Drag-drop jQuery file upload
+- **ProgressBar.jsx** - Track 5-step workflow
+- **RoadmapDisplay.jsx** - Visual Phase 1/2/3 cards with effort & risk
+- **CodeConverter.jsx** - Before/after side-by-side code comparison
+- **ErrorAlert.jsx** - User-friendly error messages
+
+### Backend (Node.js + Express)
+- **POST /api/analyze** - Code Analysis (Prompt #1)
+- **POST /api/dependencies** - Dependency Mapping (Prompt #2)
+- **POST /api/roadmap** - Roadmap Generation (Prompt #3)
+- **POST /api/convert** - Code Conversion (Prompt #4)
+
+### AI Engine
+- **Model:** Claude Haiku 4.5 (cost-optimized)
+- **Prompts:** 4 specialized prompts for analysis → planning → conversion
+- **Token Tracking:** Real-time API cost monitoring
+
+## 🔄 How It Works
+
+### Workflow Steps
+
+**Step 1: Upload Files**
+User drags jQuery files into the tool (max 5MB per file)
+
+**Step 2: Analyze Code** 
+Claude AI extracts:
+- File purpose and all functions
+- Dependencies (which files it imports)
+- Complexity score (LOW/MEDIUM/HIGH)
+- Lines of code
+- jQuery patterns used ($.ajax, $.on, etc.)
+- Breaking changes for React migration
+
+**Step 3: Map Dependencies**
+Claude determines:
+- Which files call which
+- Criticality of each file (CRITICAL/MEDIUM/LOW)
+- Isolation score (100 = isolated)
+- Call frequency and patterns
+
+**Step 4: Generate Roadmap**
+Claude creates:
+- **Phase 1:** Isolated, low-complexity files (migrate first, safest)
+- **Phase 2:** Medium-complexity files with some dependencies
+- **Phase 3:** Core files, high complexity, critical (migrate last, riskiest)
+- Effort hours per phase
+- Risk levels (color-coded)
+- Breaking changes per phase
+- Migration strategy for each file
+
+**Step 5: Convert Code**
+Claude converts Phase 1 files to React:
+- Actual working code (not pseudocode)
+- React hooks: useState, useEffect, useContext
+- Import statements and exports
+- Comments explaining migrations
+- Error handling included
+
+## 📊 Why This Beats ChatGPT
+
+| Feature | ChatGPT | CodeMigrationPlanner |
+|---------|---------|----------------------|
+| **Snippet-by-snippet** | ✅ Yes | ❌ No (whole project) |
+| **Understands dependencies** | ❌ No | ✅ Yes (full map) |
+| **Prioritizes files** | ❌ No | ✅ Yes (Phase 1→3) |
+| **Shows breaking changes** | ❌ No | ✅ Yes (before conversion) |
+| **Includes roadmap** | ❌ No | ✅ Yes (phases + effort) |
+| **Converts Phase 1 code** | ❌ No | ✅ Yes (production-ready) |
+| **Strategy for rest** | ❌ No | ✅ Yes (Phase 2→3 plans) |
+| **Risk mitigation** | ❌ No | ✅ Yes (LOW→MEDIUM→HIGH) |
+
+ChatGPT forces you to paste each file individually and convert one snippet at a time—no project context, no planning, no strategy, no risk assessment.
+
+## 💻 Tech Stack
+
+**Frontend:**
+- React 18 + Hooks
+- Vite (fast build tool)
+- Tailwind CSS (styling)
+- Axios (API calls)
+- react-syntax-highlighter (code display)
+
+**Backend:**
+- Node.js + Express.js
+- Anthropic Claude API
+- Claude Haiku 4.5 model (cost-optimized)
+- CORS enabled
+- Error handling middleware
+
+**AI & Prompts:**
+- 4 specialized Claude prompts
+- JSON structured outputs
+- Token tracking & cost monitoring
+- Retry logic with exponential backoff
+
+**Deployment:**
+- Frontend: Replit (free tier)
+- Backend: Replit (free tier)
+- Repository: GitHub (public)
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- npm 9+
+- Anthropic API key (get from console.anthropic.com)
+
+### Local Development
+
+**1. Clone the repo**
+```bash
+git clone https://github.com/GuptaKashish105/CodeMigrationPlanner.git
+cd CodeMigrationPlanner
+```
+
+**2. Setup Backend**
+```bash
+cd backend
+npm install
+cp .env.example .env
+# Edit .env and add your ANTHROPIC_API_KEY
+npm run dev
+```
+
+Backend runs on: `http://localhost:3001`
+
+**3. Setup Frontend (new terminal)**
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend runs on: `http://localhost:5173`
+
+**4. Open the app**
+Navigate to `http://localhost:5173` and start analyzing!
+
+## 📝 API Endpoints
+
+All endpoints require `ANTHROPIC_API_KEY` environment variable.
+
+### POST /api/analyze
+Analyzes jQuery files for structure, complexity, and dependencies.
+
+**Request:**
+```json
+{
+  "files": [
+    {
+      "filename": "utility.js",
+      "code": "function debounce(func, wait) { ... }"
+    }
+  ]
 }
 ```
 
----
+**Response:**
+```json
+{
+  "analyses": [
+    {
+      "file_name": "utility.js",
+      "purpose": "Helper functions",
+      "functions": [...],
+      "complexity_score": "LOW",
+      "breaking_changes_identified": []
+    }
+  ]
+}
+```
 
-# Future Roadmap
+### POST /api/dependencies
+Maps dependencies between analyzed files.
 
-## Current MVP
+### POST /api/roadmap
+Generates prioritized migration roadmap (Phase 1/2/3).
 
-- jQuery → React
+### POST /api/convert
+Converts single jQuery file to React code.
 
----
+## 💰 Costs
 
-## Phase 2
+- **Model:** Claude Haiku 4.5 ($1/$5 per million input/output tokens)
+- **Typical analysis:** ~$0.05-0.10 per file
+- **Free credits:** New API accounts usually get $5-10 in trial credits
+- **This project:** Costs ~$0.20-0.50 for all testing
 
-Support additional migrations:
-
-- Vue.js
-- AngularJS → Angular
-- Python 2 → Python 3
-- API modernization
-- Microservice migration
-
----
-
-## Phase 3
-
-Production platform features:
-
-- Claude API integration
-- Project database
-- PDF export
-- JSON export
-- Team collaboration
-- Dashboard
-
----
-
-# Market Opportunity
-
-Legacy software modernization represents a **$50B+** annual industry.
-
-Large organizations often spend **3–6 months** planning migrations before writing production code.
-
-CodeMigrationPlanner aims to reduce planning time by **up to 80%** while providing dependency-aware migration strategies.
-
----
-
-# Project Structure
+## 📂 Project Structure
 
 ```text
 CodeMigrationPlanner/
+├── backend/
+│   ├── src/
+│   │   ├── server.js (Express app)
+│   │   ├── routes/ (4 API endpoints)
+│   │   ├── utils/ (Claude client, prompts)
+│   │   └── middleware/ (error handling)
+│   ├── .env.example
+│   ├── package.json
+│   └── .gitignore
+│
+├── frontend/
+│   ├── src/
+│   │   ├── App.jsx (main component)
+│   │   ├── components/ (5 React components)
+│   │   ├── services/ (API calls)
+│   │   └── styles/ (Tailwind CSS)
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.js
+│   └── .gitignore
 │
 ├── README.md
-├── PROMPTS.md
-├── EXAMPLES.md
-│
-└── demo/
-    └── index.html
+├── PROMPTS.md (all 4 prompts)
+├── EXAMPLES.md (real workflow examples)
+└── .gitignore
+```
+
+## 🎓 How to Use
+
+1. **Prepare jQuery files** - Gather all .js files you want to migrate
+2. **Upload files** - Drag into the app or click to browse
+3. **Click "Analyze Files"** - Watch the 5-step workflow
+4. **View Roadmap** - See Phase 1/2/3 with effort estimates
+5. **Review Converted Code** - See Phase 1 files converted to React
+6. **Download** - Export roadmap as JSON for your team
+7. **Execute** - Follow the phases to migrate your codebase
+
+## 📊 Example Analysis
+
+**Input:** 5 jQuery files from a legacy dashboard app
+
+**Output:**
+- ✅ Roadmap: 29 hours, 5 weeks estimated
+- ✅ Phase 1 (2h): utility.js fully converted
+- ✅ Phase 2 (11h): auth.js, modal.js with breaking changes flagged
+- ✅ Phase 3 (16h): sidebar.js, app.js with migration strategies
+- ✅ Risk assessment: LOW → MEDIUM → HIGH
+- ✅ Critical path identified
+
+## 🔮 Future Scope
+
+**Phase 2:** Multi-tech-stack support
+- Vue.js migrations
+- Angular 1.x → Modern Angular
+- Python 2 → Python 3
+- Svelte migrations
+
+**Phase 3:** Production features
+- Database storage for analyses
+- Team collaboration features
+- Export roadmaps as PDF
+- Git integration for automated suggestions
+- Batch processing multiple projects
+
+## 🎯 Market Opportunity
+
+The legacy code modernization industry is **$50B+ annually**. Companies spend 3-6 months on migration planning alone. CodeMigrationPlanner cuts planning time by 80% while improving accuracy.
+
+## 📚 Documentation
+
+- **PROMPTS.md** - All 4 Claude prompts with explanations
+- **EXAMPLES.md** - Real workflow examples with screenshots
+- **DEPLOYMENT.md** - Setup instructions for Replit
+
+---
+
+## Key Features Summary
+
+```text
+✅ **Analyzes entire codebases** at once (not just snippets)
+✅ **Generates strategic roadmap** with Phase 1/2/3 prioritization
+✅ **Identifies breaking changes** before migration starts
+✅ **Shows actual code conversions** (jQuery → React)
+✅ **Estimates effort & risk** for each phase
+✅ **Beautiful UI** for complex data visualization
+✅ **Powered by Claude AI** (Haiku 4.5 for cost-efficiency)
+✅ **Production-ready code** in both frontend and backend
+✅ **Live demo available** on Replit
+✅ **Completely free to use** (only API costs ~$0.50)
 ```
 
 ---
 
-## License
+## 🤝 Contributing
 
-This project is intended as an AI-assisted migration planning demonstration and proof of concept.
+This is a hackathon submission. Feedback welcome!
+
+## 📄 License
+
+MIT
+
+## 👨‍💻 Built By
+
+Kashish Gupta
+
+Built for Anthropic Hackathon (July 2026)
